@@ -13,7 +13,7 @@ int LongestSubsetWithZeroSum(vector<int> arr)
         if (prefix_sum == 0)
         {
             maxlength = i + 1;
-        }
+        } 
         if (prefix_map.find(prefix_sum) != prefix_map.end())
         {
             maxlength = max(maxlength, i - prefix_map[prefix_sum]);
