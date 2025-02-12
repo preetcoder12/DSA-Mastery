@@ -1,31 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
-int subArrayCount(vector<int> &arr, int k)
+
+vector<int> twoSum(vector<int> &nums, int target)
 {
-    // Write your code here.
     unordered_map<int, int> map;
-    int prefix_sum = 0;
-    int count = 0;
-
-    for (int n : arr)
+    for (int i = 0; i < nums.size(); i++)
     {
-        prefix_sum += n;
+        int complement = target - nums[i];
 
-        int remainder = ((prefix_sum % k) + k) % k;
-
-        if (map.find(remainder) != map.end())
+        if (map.find(complement) != map.end())
         {
-            count += map[remainder];
+            return {map[complement], i};
         }
-        map[remainder]++;
+        map[nums[i]] = i;
     }
-    return count;
+    return {};
 }
 
 int main()
-{ //                 0, 1 ,2  ,3, 4
-    vector<int> A = {5, 0, 2, 3, 1};
-    int n = A.size();
-    cout << subArrayCount(A, n) << endl;
+{
+    vector<int> A = {3, 2, 4};
+    int target = 6;
+
+    vector<int> B = twoSum(A, target);
+
+    cout << "Pair: ";
+    for (int num : B)
+    {
+        cout << num << " ";
+    }
+    cout << endl;
     return 0;
 }
