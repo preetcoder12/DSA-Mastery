@@ -1,35 +1,36 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-void intersection(int arr1[], int arr2[], int n)
-{
-    int i, j, k = 0;
-    int arr3[n];
+vector<int> intersection(vector<int> nums1, vector<int> nums2)
 
-    for (i = 0; i < n; i++)
+{
+    unordered_map<int, int> freq;
+    vector<int> ans;
+    for (int num : nums1)
     {
-        for (j = 0; j < n; j++)
+        freq[num]++;
+    }
+    for (int num : nums2)
+    {
+        if (freq[num] > 0)
         {
-            if (arr1[i] == arr2[j])
-            {
-                arr3[k] = arr1[i];
-                k++;
-                break;
-            }
+            ans.push_back(num);
+            freq[num] = 0;
         }
     }
-    // Print the intersection array
-    for (i = 0; i < k; i++)
-    {
-        cout << arr3[i] << endl;
-    }
+    return ans;
 }
 
 int main()
 {
-    int arr1[3] = {1, 2, 3};
-    int arr2[3] = {2, 4, 5};
-    intersection(arr1, arr2, 3);
+    vector<int> A = {1, 2, 3};
+    vector<int> B = {2, 4, 5};
+    vector<int> ans = intersection(A, B);
+    for (int n : ans)
+    {
+        cout << n << " ";
+    }
+    cout << endl;
 
     return 0;
 }
