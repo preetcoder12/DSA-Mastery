@@ -1,88 +1,123 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 class node
 {
 public:
     int data;
-    node *prev;
     node *next;
+    node *prev;
 
-    node(int d)
+    node(int data)
     {
-        this->data = d;
-        this->prev = NULL;
+        this->data = data;
         this->next = NULL;
+        this->prev = NULL;
     }
 };
 
-void insertLast(node *&head, node *&tail, int d)
+void insert_at_start(node *&head, node *&tail, int n)
 {
-    node *temp = new node(d);
+    node *temp = new node(n);
+
+    if (head == NULL) // If list is empty, update both head and tail
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+}
+
+void insert_At_End(node *&head, node *&tail, int n)
+{
+    node *temp = new node(n);
     if (tail == NULL)
     {
         head = tail = temp;
     }
     else
     {
-
         tail->next = temp;
         temp->prev = tail;
         tail = temp;
     }
 }
 
-void insertAnyIndex(node *&head, node *&tail, int d, int pos)
+void insert_at_middle(node *&head, node *&tail, int n, int pos)
 {
-    int count = 1;
-    node *temp2 = head;
-    node *temp = new node(d);
-    if (pos == 1)
+    node *temp = new node(n);
+
+    // Case 1: If list is empty or position is 0, insert at start
+    if (head == NULL || pos == 0)
     {
-        temp->next = head;
-        head = temp;
+        insert_at_start(head, tail, n);
         return;
     }
 
-    if (temp2->next == NULL)
-    {
-        insertLast(head, tail, d);
-    }
+    // Case 2: Traverse to the specified position
+    node *temp1 = head;
+    int count = 0;
 
-    while (count < pos - 1)
+    while (temp1 != nullptr && count < pos)
     {
-        temp2 = temp2->next;
+        temp1 = temp1->next;
         count++;
     }
 
-    temp->next = temp2->next;
+    // If position is beyond the length, insert at the end
+    if (temp1 == nullptr)
+    {
+        insert_At_End(head, tail, n);
+        return;
+    }
+
+    // Case 3: Insert at the middle, update pointers
+    node *temp2 = temp1->prev; // Previous node of the target position
+
+    // Adjust the links
     temp2->next = temp;
+    temp->prev = temp2;
+    temp->next = temp1;
+    temp1->prev = temp;
 }
 
-void print(node *&head)
+void printlist(node *head)
 {
-
     node *temp = head;
     while (temp != NULL)
     {
-        cout << temp->data << " ";
+        cout << temp->data << " -> ";
         temp = temp->next;
     }
-    cout << endl;
+    cout << "NULL" << endl;
 }
 
 int main()
 {
-    node *head = NULL;
+    node *head = NULL; // Initialize head and tail properly
     node *tail = NULL;
 
-    insertLast(head, tail, 3);
-    insertLast(head, tail, 6);
-    insertLast(head, tail, 4);
-    insertLast(head, tail, 8);
+    // Insert elements
+    insert_at_start(head, tail, 8);
+    insert_at_start(head, tail, 5);
+    insert_At_End(head, tail, 11);
+    insert_at_middle(head, tail, 99, 1);
 
-    insertAnyIndex(head, tail, 2, 1);
-    insertAnyIndex(head, tail, 99, 3);
+    // Print list
+    printlist(head);
 
-    print(head);
+    // Cleanup memory
+    node *temp;
+    while (head != NULL)
+    {
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    return 0;
 }

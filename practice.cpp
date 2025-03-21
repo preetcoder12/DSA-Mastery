@@ -6,19 +6,76 @@ class node
 public:
     int data;
     node *next;
+    node *prev;
 
     node(int data)
     {
         this->data = data;
         this->next = NULL;
+        this->prev = NULL;
     }
 };
-void insert_at_start(node *&head, int n)
+
+void insert_at_start(node *&head, node *&tail, int n)
 {
     node *temp = new node(n);
-    temp->next = head;
-    head = temp;
+
+    if (head == NULL) // If list is empty, update both head and tail
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
 }
+
+void insert_At_End(node *&head, node *&tail, int n)
+{
+    node *temp = new node(n);
+    if (tail == NULL)
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+}
+
+void insert_at_middle(node *&head, node *&tail, int n, int pos)
+{
+    node *temp = new node(n);
+    if (head == NULL || pos == 0)
+    {
+        insert_at_start(head, tail, n);
+        return;
+    }
+    node *temp1 = head;
+    int count = 0;
+    while (temp1 != nullptr && count < pos)
+    {
+        temp1 = temp1->next;
+        count++;
+    }
+    cout << count << endl;
+    if (temp1 == nullptr)
+    {
+        insert_At_End(head, tail, n);
+        return;
+    }
+    node *temp2 = temp1->prev;
+
+    temp2->next = temp;
+    temp->prev = temp2;
+    temp->next = temp1;
+    temp1->prev = temp;
+}
+
 void printlist(node *head)
 {
     node *temp = head;
@@ -29,22 +86,29 @@ void printlist(node *head)
     }
     cout << "NULL" << endl;
 }
+
 int main()
 {
-    node *n1 = new node(10);
-    cout << "data :" << n1->data << endl;
-    cout << "next address :" << n1->next << endl;
-    insert_at_start(n1, 5);
-    insert_at_start(n1, 8);
-    printlist(n1);
+    node *head = NULL; // Initialize head and tail properly
+    node *tail = NULL;
+
+    // Insert elements
+    insert_at_start(head, tail, 8);
+    insert_at_start(head, tail, 5);
+    insert_At_End(head, tail, 11);
+    insert_at_middle(head, tail, 99, 1);
+
+    // Print list
+    printlist(head);
+
+    // Cleanup memory
     node *temp;
-    while (n1 != NULL)
+    while (head != NULL)
     {
-        temp = n1;
-        n1 = n1->next;
+        temp = head;
+        head = head->next;
         delete temp;
     }
 
     return 0;
 }
-//
