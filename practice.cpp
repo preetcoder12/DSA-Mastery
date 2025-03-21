@@ -1,68 +1,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void reverseArray(int *arr, int start, int end)
+class node
 {
-    if (start < end)
-    {
-        swap(arr[start], arr[end]);
-        start++;
-        end--;
-    }
-}
+public:
+    int data;
+    node *next;
 
-int search(int *arr, int n, int key)
+    node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+void insert_at_start(node *&head, int n)
 {
-    // sort
-    int sizeodarray =0;
-    
-    cout << sizeodarray << endl;
-    sort(arr, arr + sizeodarray);
-
-    // roatation of array n times
-    n = n % sizeodarray;
-    for (int i = 0; i < sizeodarray; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-    reverseArray(arr, 0, sizeodarray - 1);
-    reverseArray(arr, 0, n - 1);
-    reverseArray(arr, n, sizeodarray - 1);
-    for (int i = 0; i < sizeodarray; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-    int low = 1;
-    int high = n - 1;
-    int ans = 0;
-    while (low < high)
-    {
-        int mid = low + (high - low) / 2;
-        if (arr[mid] == key)
-        {
-            return mid;
-        }
-        else if (arr[mid] < key)
-        {
-            ans = mid;
-            low = mid + 1;
-        }
-        else
-        {
-            high = mid - 1;
-        }
-    }
-    return -1;
+    node *temp = new node(n);
+    temp->next = head;
+    head = temp;
 }
-
+void printlist(node *head)
+{
+    node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
 int main()
 {
-    int A[4] = {2, 4, 3, 1};
-    int key = 4;
-    int n = 2;
-    cout << search(A, n, key) << endl;
+    node *n1 = new node(10);
+    cout << "data :" << n1->data << endl;
+    cout << "next address :" << n1->next << endl;
+    insert_at_start(n1, 5);
+    insert_at_start(n1, 8);
+    printlist(n1);
+    node *temp;
+    while (n1 != NULL)
+    {
+        temp = n1;
+        n1 = n1->next;
+        delete temp;
+    }
+
     return 0;
 }
 //
