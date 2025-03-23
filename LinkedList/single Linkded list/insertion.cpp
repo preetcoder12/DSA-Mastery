@@ -23,14 +23,17 @@ void insert_at_start(node *&head, int n)
 void insert_At_End(node *&head, int n)
 {
     node *temp = new node(n);
+    if (head == NULL)
+    {
+        head = temp;
+        return;
+    }
     node *temp2 = head;
     while (temp2->next != NULL)
     {
         temp2 = temp2->next;
     }
     temp2->next = temp;
-    temp->next = NULL;
-    temp2 = temp;
 }
 
 void insert_at_middle(node *&head, int n, int pos)
