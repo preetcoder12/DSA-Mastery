@@ -1,6 +1,5 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-#include <stack>
 
 int main()
 {
@@ -9,16 +8,14 @@ int main()
     s.push(3);
     s.push(4);
     s.push(5);
-    cout <<"top element is "<< s.top() << endl;
+    s.pop();
+    cout << "top element is " << s.top() << endl;
 
     if (s.empty())
     {
         cout << "stack is empty" << endl;
     }
-    else
-    {
-        cout << "stack is not empty" << endl;
-    }
+    cout << "stack is not empty" << endl;
 
     cout << "size of stack is " << s.size() << endl;
     s.pop();

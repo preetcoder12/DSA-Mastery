@@ -11,7 +11,6 @@ void insert_at_bottom(stack<int> &stack, int top_ele)
     }
     int ele = stack.top();
     stack.pop();
-
     insert_at_bottom(stack, top_ele);
     stack.push(ele);
 }
@@ -24,7 +23,6 @@ void reverseStack(stack<int> &stack)
     }
     int top_ele = stack.top();
     stack.pop();
-
     reverseStack(stack);
     insert_at_bottom(stack, top_ele);
 }

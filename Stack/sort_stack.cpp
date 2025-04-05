@@ -30,6 +30,15 @@ void sortStack(stack<int> &stack)
     sortInsert(stack, top);
 }
 
+void printStack(stack<int> st)
+{
+    while (!st.empty())
+    {
+        cout << st.top() << " ";
+        st.pop();
+    }
+    cout << endl;
+}
 int main()
 {
     stack<int> stack;
@@ -38,4 +47,7 @@ int main()
     stack.push(1);
     stack.push(45);
     stack.push(34);
+    printStack(stack);
+    sortStack(stack);
+    printStack(stack);
 }
