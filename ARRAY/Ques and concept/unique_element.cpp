@@ -1,56 +1,34 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-void getArray(int A[], int n)
+vector<int> uniqueElements(vector<int> &arr)
 {
-    for (int i = 0; i < n; i++)
+    map<int, int> freq;
+    vector<int> arr2;
+
+    for (int num : arr)
     {
-        cin >> A[i];
+        freq[num]++;
     }
-}
-void printArray(int A[], int n)
-{
-    for (int i = 0; i < n; i++)
+
+    for (auto &p : freq)
     {
-        cout << A[i] << endl;
-    }
-}
-
-void unique_element(int A[], int n)
-{
-    bool isUnique;
-
-    for (int i = 0; i < n; i++)
-    {
-        isUnique = true;
-
-        for (int j = 0; j < n; j++)
+        if ((p.second) == 1)
         {
-            if (i != j && A[i] == A[j])
-            {
-                isUnique = false;
-                break;
-            }
-        }
-        if (isUnique)
-        {
-            cout << A[i] << " is unique" << endl;
+            arr2.push_back(p.first);
         }
     }
+    return arr2;
 }
 
 int main()
 {
-    int n;
-    cout << "Enter the value of n: ";
-    cin >> n;
-    int *A = new int[n];
-
-    cout << "Enter the elements of the array:" << endl;
-    getArray(A, n);
-
+    vector<int> arr = {1, 2, 3, 3, 4, 5};
+    vector<int> ans = duplicates(arr);
+    for (int num : ans)
+    {
+        cout << num << " ";
+    }
     cout << endl;
-    unique_element(A, n);
-
     return 0;
 }

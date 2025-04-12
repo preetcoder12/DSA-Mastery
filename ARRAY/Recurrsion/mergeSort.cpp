@@ -1,79 +1,69 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-void merge(int A[], int s, int e)
+vector<int> merge(vector<int> &arr, int l, int mid, int r)
 {
-    // breaking array into two pieces of len1 and len2
+    int n1 = mid - l + 1;
+    int n2 = r - mid;
+    vector<int> arr1(n1);
+    vector<int> arr2(n2);
 
-    int mid = (s + e) / 2;
-
-    int len1 = mid - s + 1;
-    int len2 = e - mid;
-
-    int first[len1];
-    int second[len2];
-
-    int mainArrayindex = s;
-//first we add value from s to len1 into first array
-    for (int i = 0; i < len1; i++)
+    for (int i = 0; i < n1; i++)
     {
-        first[i] = A[mainArrayindex++];
+        arr1[i] = arr[l + i];
     }
-//then  we add value from mid +1 to len2 into second array
-    mainArrayindex = mid + 1;
-
-    for (int j = 0; j < len2; j++)
+    for (int i = 0; i < n2; i++)
     {
-        second[j] = A[mainArrayindex++];
+        arr2[i] = arr[mid + 1 + i];
     }
-
-    // merging both array
-
-    int index1 = 0;
-    int index2 = 0;
-    mainArrayindex = s;
-    while (index1 < len1 && index2 < len2)
+    int i = 0;
+    int j = 0;
+    int k = l;
+    while (i < n1 && j < n2)
     {
-        if (first[index1] < second[index2])
+        if (arr1[i] < arr2[j])
         {
-            A[mainArrayindex++] = first[index1++];
+            arr[k++] = arr1[i++];
         }
         else
         {
-            A[mainArrayindex++] = second[index2++];
+            arr[k++] = arr2[j++];
         }
     }
-    while (index1 < len1)
+    while (i < n1)
     {
-        A[mainArrayindex++] = first[index1++];
+        arr[k++] = arr1[i++];
     }
-    while (index2 < len2)
+    while (j < n2)
     {
-        A[mainArrayindex++] = second[index2++];
+        arr[k++] = arr2[j++];
     }
+    return arr;
 }
 
-void mergeSort(int A[], int s, int e)
+void mergesort(vector<int> &arr, int l, int r)
 {
-    if (s >= e)
+    if (l >= r)
     {
         return;
     }
-    int mid = (s + e) / 2;
-
-    mergeSort(A, s, mid);
-    mergeSort(A, mid + 1, e);
-    merge(A, s, e);
+    int mid = l + (r - l) / 2;
+    mergesort(arr, l, mid);
+    mergesort(arr, mid + 1, r);
+    merge(arr, l, mid, r);
 }
 
 int main()
 {
-    int A[10] = {9, 8, 45, 76, 23, 56, 3, 2, 1, 34};
-    int n = 10;
-    mergeSort(A, 0, n - 1);
-    for (int i = 0; i < n; i++)
+    vector<int> arr = {2, 3, 4, 2, 2, 4, 2};
+    int n = arr.size();
+
+    mergesort(arr, 0, n - 1);
+    cout << "sorted array is : " << endl;
+    for (int n : arr)
     {
-        cout << A[i] << " ";
+        cout << n << " ";
     }
     cout << endl;
+    return 0;
 }
