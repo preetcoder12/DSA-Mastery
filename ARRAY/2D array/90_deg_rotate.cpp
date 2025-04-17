@@ -42,10 +42,7 @@ void inplaceRotate(vector<vector<int>> &inputArray)
     // 3  0  1
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n / 2; j++)
-        {
-            swap(inputArray[j][i], inputArray[n - 1 - j][i]);
-        }
+       reverse(inputArray[i].begin() , inputArray[i].end());
     }
 
     for (int i = 0; i < n; i++)
