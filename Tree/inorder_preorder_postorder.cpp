@@ -65,37 +65,36 @@ void printTree(node *root)
         }
     }
 }
-void reverlevelorder(node *root)
+
+void indorder(node *root) // LNR
 {
-    if (!root)
+    if (root == NULL)
     {
         return;
     }
-    queue<node *> q;
-    stack<int> s;
-
-    q.push(root);
-    while (!q.empty())
+    indorder(root->left);
+    cout << root->data << " ";
+    indorder(root->right);
+}
+void preorder(node *root) // NLR
+{
+    if (root == NULL)
     {
-        node *temp = q.front();
-        q.pop();
-        s.push(temp->data);
-
-        if (temp->right)
-        {
-            q.push(temp->right);
-        }
-        if (temp->left)
-        {
-            q.push(temp->left);
-        }
+        return;
     }
-    while (!s.empty())
+    cout << root->data << " ";
+    indorder(root->left);
+    indorder(root->right);
+}
+void postorder(node *root) // LRN
+{
+    if (root == NULL)
     {
-        cout << s.top() << " ";
-        s.pop();
+        return;
     }
-    cout << endl;
+    indorder(root->left);
+    indorder(root->right);
+    cout << root->data << " ";
 }
 
 int main()
@@ -105,7 +104,18 @@ int main()
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1 just copy paste it
     printTree(root);
     cout << endl;
+
+    cout << "Inorder : ";
+    indorder(root);
     cout << endl;
-    reverlevelorder(root);
+
+    cout << "Prerder : ";
+    preorder(root);
+    cout << endl;
+
+    cout << "Postrder : ";
+    postorder(root);
+    cout << endl;
+
     return 0;
 }
