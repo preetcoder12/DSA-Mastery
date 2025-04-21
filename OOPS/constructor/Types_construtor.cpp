@@ -18,7 +18,7 @@ public:
     {
         cout << "power level is : " << x << endl; // this is parameterised constructor
     }
-    float height(float x)
+    float maxdepthheight(float x)
     {
         return x;
     }
